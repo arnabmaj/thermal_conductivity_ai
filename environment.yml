@@ -1,0 +1,47 @@
+name: thermal-ai
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - bzip2=1.0.8=h0ad9c76_9
+  - ca-certificates=2026.2.25=h4c7d964_0
+  - libexpat=2.7.4=hac47afa_0
+  - libffi=3.5.2=h3d046cb_0
+  - liblzma=5.8.2=hfd05255_0
+  - libsqlite=3.52.0=hf5d6505_0
+  - libzlib=1.3.1=h2466b09_2
+  - openssl=3.6.1=hf411b9b_1
+  - packaging=26.0=pyhcf101f3_0
+  - pip=26.0.1=pyh8b19718_0
+  - python=3.11.15=h0159041_0_cpython
+  - setuptools=82.0.1=pyh332efcf_0
+  - tk=8.6.13=h6ed50ae_3
+  - ucrt=10.0.26100.0=h57928b3_0
+  - vc=14.3=h41ae7f8_34
+  - vc14_runtime=14.44.35208=h818238b_34
+  - vcomp14=14.44.35208=h818238b_34
+  - wheel=0.46.3=pyhd8ed1ab_0
+  - pip:
+      - annotated-types==0.7.0
+      - anthropic==0.84.0
+      - anyio==4.12.1
+      - certifi==2026.2.25
+      - distro==1.9.0
+      - docstring-parser==0.17.0
+      - h11==0.16.0
+      - httpcore==1.0.9
+      - httpx==0.28.1
+      - idna==3.11
+      - jiter==0.13.0
+      - numpy==2.4.3
+      - pandas==3.0.1
+      - pydantic==2.12.5
+      - pydantic-core==2.41.5
+      - python-dateutil==2.9.0.post0
+      - python-dotenv==1.2.2
+      - six==1.17.0
+      - sniffio==1.3.1
+      - typing-extensions==4.15.0
+      - typing-inspection==0.4.2
+      - tzdata==2025.3
+prefix: C:\Users\arnab\miniconda3\envs\thermal-ai
