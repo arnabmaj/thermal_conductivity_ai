@@ -23,16 +23,22 @@ from dotenv import load_dotenv
 
 # ── Config ───────────────────────────────────────────────────────────────────
 
+_PROJECT_ROOT = Path(__file__).resolve().parents[1]
 _DOTENV_CANDIDATES = (
-    Path("config/secrets.env"),
-    Path("config/@config/secrets.env"),
+    _PROJECT_ROOT / "config" / "secrets.env",
+    _PROJECT_ROOT / "config" / "@config" / "secrets.env",
 )
+
+# If a key is already set in the environment, keep it (override=False).
+# This only wires configuration; extraction logic is unchanged.
 for _p in _DOTENV_CANDIDATES:
     if _p.exists():
         load_dotenv(_p, override=False)
         break
 
-MODEL = os.getenv("ANTHROPIC_MODEL", "claude-3-5-haiku-latest")
+# Default to the lowest-cost model available to this project/key.
+# You can override via ANTHROPIC_MODEL in `config/secrets.env` or your shell env.
+MODEL = os.getenv("ANTHROPIC_MODEL", "claude-haiku-4-5-20251001")
 MAX_TOKENS = 4000
 MAX_TOKENS_RETRY = 8000
 DEFAULT_OUT_DIR = "data/extracted"
@@ -63,12 +69,14 @@ Return ONLY a JSON object in this exact format:
       "page": 0,
       "evidence": "short verbatim supporting snippet",
       "confidence": "high|medium|low"
+      "source_type": "text|table|figure|unknown",
     }
   ]
 }
 
 Rules:
 - Extract ONLY thermal conductivity values.
+- Only extract space group or crystal structure if explicitly stated in the text.Do not infer them.
 - Do NOT extract: superconducting Tc, Curie temperature, Neel temperature,
   synthesis/annealing/melting/decomposition temperatures, or any temperature
   unrelated to thermal conductivity.
@@ -315,7 +323,7 @@ CSV_FIELDS = [
     "condition",
     "page",
     "confidence",
-    "evidence",
+    "evidence"
 ]
 
 
@@ -345,7 +353,8 @@ def save_results(
             json.dump(rejected_records, f, indent=2, ensure_ascii=False)
         print(f"Saved: {out / 'rejected_records.json'}  ({len(rejected_records)} rejected)")
 
-    print("\n── Summary ──────────────────────────────────────────────")
+    # Use ASCII to avoid Windows console encoding issues.
+    print("\n-- Summary ------------------------------------------------")
     for doc in all_results:
         print(f"\n{doc['source_file']}")
         if "error" in doc:

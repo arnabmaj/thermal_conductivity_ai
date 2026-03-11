@@ -11,9 +11,10 @@ venv/
 # Secrets
 config/secrets.env
 
-# Data (large files)
+# Data
 data/raw/papers/*
+docs/papers/*
 
-# OS junk
+# OS
 .DS_Store
 Thumbs.db
